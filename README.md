@@ -1,117 +1,115 @@
 # ☕ Café Kiosk & Recommendation Web Platform
-**Multi-Page Application(MPA) 구조 기반의 경량화된 클라이언트 사이드 카페 주문 및 개인화 추천 키오스크 웹 플랫폼**
+**Vite + React SPA 아키텍처 기반의 비즈니스 로직 분리형 스마트 카페 주문 키오스크 웹 플랫폼**
 
-본 프로젝트는 별도의 백엔드 서버 인프라 없이 브라우저 내장 자원만을 활용하여 웹 애플리케이션의 데이터 지속성(Persistence)과 상태 관리(State Management)를 구현한 프로젝트다. 주소창의 파라미터 제어(Query String)와 브라우저 로컬 스토리지(LocalStorage) 파싱을 고도화하여 단일 페이지 애플리케이션(SPA) 못지않은 매끄러운 다중 페이지(MPA) 사용자 경험을 제공하도록 설계되었다.
+본 프로젝트는 UI/UX 렌더링 엔진과 핵심 비즈니스 로직(데이터 처리 및 연산 레이어)을 엄격히 분리(Decoupling)하여 설계된 모던 웹 애플리케이션입니다. 고성능 프론트엔드 빌드 도구인 **Vite**와 **React** 컴포넌트 프레임워크를 기반으로 스마트 키오스크의 단일 페이지 애플리케이션(SPA) 사용자 경험을 완벽히 구현했으며, 별도의 외부 데이터베이스 없이 클라이언트 사이드 단에서 완결성 있는 상태 관리(State Management) 및 데이터 영속성을 증명한 프로젝트입니다.
 
 ---
 ## 🌐 Live Demo & CD Pipeline
-Deployment URL: https://cafe-kiosk-mpa.vercel.app/
+* **Deployment URL**: https://cafe-kiosk-mpa.vercel.app/
+* **CI/CD 인프라**: GitHub `main` 브랜치와 Vercel 클라우드 플랫폼을 연동하여 코드가 푸시(git push)되는 즉시 실시간 프로덕션 환경에 실시간으로 빌드 및 자동 반영되는 지속적 배포(Continuous Deployment) 자동화 파이프라인이 구축되어 있습니다.
 
-CI/CD: GitHub main 브랜치와 Vercel 인프라를 연동하여 코드 푸시(git push) 시 실시간 프로덕션 환경에 10초 이내로 자동 반영되는 지속적 배포(Continuous Deployment) 파이프라인이 구축되어 있다.
+---
+## 🖥️ 시연 화면 및 사용자 흐름 (UI/UX)
 
+### 1. 메인 홈 화면 (`SelectedItemPane` / `MenuSection`)
+웜 베이지 톤과 오렌지 포인트 컬러를 매칭하여 실제 상용화된 키오스크 수준의 뛰어난 시각적 가독성을 제공합니다. 상단의 추천 배너 영역과 좌측의 카테고리 탭(커피, 논커피, 디저트) 전환 시 화면 무중단 상태로 매끄러운 반응형 클라이언트 사이드 렌더링이 이루어집니다.
+![메인 홈 화면](메인%20홈%20화면.png)
 
+### 2. 동적 옵션 제어 모달 (`SelectedItemModal`)
+특정 메뉴 선택 시 트리거되는 중앙 팝업 모달창입니다. 사용자는 다른 페이지로의 이동 없이 해당 자리에서 레ギュラー, 라지, 점보 등의 세부 옵션을 직관적으로 제어할 수 있으며, 선택된 옵션에 따른 단가가 실시간으로 화면 변수에 반영됩니다.
+![옵션 팝업 화면](옵션%20팝업%20화면.png)
+
+### 3. 실시간 트랜잭션 알림 시스템 (`ToastMessage`)
+상품이 장바구니에 성공적으로 담기면 하단에 흐려지며 나타났다 사라지는 토스트 팝업 알림창이 구동됩니다. 이를 통해 시스템의 상태 변화를 유저에게 비동기적으로 명확히 전달하여 사용자 경험(UX) 가산점을 확보했습니다.
+![장바구니(알림)화면](장바구니(알림)화면.png)
+
+### 4. 영속성 장바구니 및 총액 집계 (`CartModal` / `OrderSummary`)
+주문 도우미 영역에서 주문 내역을 클릭하면 활성화되는 오버레이 모달창입니다. 담긴 상품들의 수량을 실시간으로 가감하거나 개별/전체 삭제할 수 있으며, 수량 변동에 따른 총 결제 금액 연산이 오차 없이 실시간으로 계산되어 출력됩니다.
+![장바구니 화면](장바구니%20화면.png)
 
 ---
 ## 🛠 Tech Stack
-* Language: HTML5, CSS3, JavaScript (ES6+ Vanilla JS)
 
-* Layout & UI/UX: Responsive Web Design, CSS Transition Animations (프론트엔드 레이어 단계에서 유연하게 확장 예정)
+### Front-end UI Layer
+* **Framework & Build Tool**: React (v18.3.1), Vite (v5.4.10)
+* **Language & Styling**: JavaScript (ES6+), Modern Vanilla CSS (index.css)
+* **UI Architecture**: Component-Driven SPA (Single Page Application)
 
-* Storage & API: Browser LocalStorage, Open-Meteo Weather API
-
-* Deployment: Vercel Cloud Platform
+### Logic & Data Layer
+* **Architecture**: Vanilla JS 기반 독립형 데이터 가공 및 연산 엔진
+* **Storage & Platform**: Browser LocalStorage, Vercel Cloud Platform
 
 ---
 ## 🚀 Key Features
-**1. 사용자 성향 기반 맞춤형 음료 추천 엔진 (data.js / list.js)**
-* 사용자의 맛 선호도(단맛, 쓴맛, 상큼함) 및 카페인 수용 여부를 직관적인 선택지 기반 UI로 수집한다.
 
-* 수집된 데이터를 알고리즘을 통해 쿼리 스트링(Query String) 파라미터로 변환하여 메인 리스트 뷰로 전달한다.
+**1. 컴포넌트 구동형 동적 메뉴 렌더링 시스템**
+* 인메모리(In-memory) 메뉴 데이터셋을 기반으로, 사용자의 카테고리 탭 선택에 맞춰 JavaScript 고차 함수(`filter()`, `map()`)를 활용해 조건에 부합하는 아이템만 선별하여 화면을 동적으로 가동합니다.
 
-**2. 동적 데이터 필터링 및 렌더링 시스템 (list.js)**
-* URLSearchParams API를 활용하여 전달받은 URL 파라미터를 실시간으로 파싱한다.
+**2. 캡슐화된 상태 기반 옵션 제어 모달**
+* 메뉴의 고유 식별자(`id`)를 추적하여 해당 상품의 상세 정보와 규격을 매칭합니다. 선택한 컵 사이즈(레귤러/라지/점보)에 따른 가산 금액 트래킹 로직이 객체 구조로 안전하게 캡슐화되어 동작합니다.
 
-* JavaScript 고차 함수(filter(), map())를 활용하여 인메모리(In-memory) 메뉴 데이터셋에서 조건에 부합하는 아이템만 선별하여 클라이언트 사이드 렌더링(CSR)을 수행한다.
+**3. 비동기식 토스트 알림 및 실시간 피드백**
+* 장바구니 트랜잭션 발생 시 독립적인 상태 변화 알림 모듈(`ToastMessage.jsx`)이 구동되어 유저에게 직관적인 인터랙션 피드백을 전달합니다.
 
-* 일치하는 결과가 없는 경우 예외 처리(Exception Handling) 로직을 통해 기본 추천 메뉴를 동적으로 표출한다.
-
-**3. 외부 API 기반 컨텍스트 매칭 및 옵션 제어 (detail.js)**
-* 특정 메뉴 선택 시 고유 식별자(id) 파라미터를 기반으로 find() 연산을 수행하여 상세 정보를 동적으로 로드한다.
-
-* 실시간 외부 날씨 API(Open-Meteo)를 비동기(async/await)로 호출하여 기온 및 기후 상태에 따라 최적의 추천 옵션(ICE/HOT)을 유저에게 컨텍스트 기반으로 제안한다. Network Error 발생 시 유연한 Fallback 데이터 핸들링이 적용되어 있다.
-
-* 키오스크 필수 옵션 데이터 및 픽업 매장 좌표 정보를 객체 구조로 캡슐화하여 브라우저의 LocalStorage에 직렬화(JSON.stringify) 후 영속 저장한다.
-
-**4. 영속성 데이터 관리 및 주문 시뮬레이션 (wishlist.js)**
-* 여러 페이지에 걸쳐 적층된 로컬 스토리지 데이터를 역직렬화(JSON.parse)하여 결제 대기 리스트를 재구성한다.
-
-* 장바구니 내 수량 변경, 실시간 총결제 금액 산출 로직(reduce() 활용) 및 아이템 개별/전체 삭제 기능을 안정적으로 제어한다.
-
-**5. 로컬스토리지 기반 마이크로 커뮤니티 피드 (board.js)**
-* 타임스탬프 기반의 고유 ID 발급 메커니즘을 적용하여 외부 데이터베이스 없이도 데이터의 CRUD(Create, Read, Delete) 흐름을 완벽히 모방한 방명록 및 이용 후기 피드를 구현한다.
+**4. 영속성 데이터 관리 및 실시간 결제 애그리게이션 알고리즘**
+* 장바구니 내 적층되는 상품 데이터를 브라우저의 `LocalStorage`와 연동하여 세션이 유지되는 동안 데이터 정합성을 영속적으로 보장합니다.
+* 장바구니 내부의 실시간 수량 변경 흐름 및 고차 함수 `reduce()`를 극대화한 실시간 총결제 금액 산출 로직이 결합되어 안정적인 주문 시뮬레이션을 제어합니다.
 
 ---
-📁 Directory Structure (Current)
-현재 본 저장소는 비즈니스 로직 및 핵심 데이터 아키텍처 레이어 세팅이 완료된 상태다.
+## 📁 Directory Structure
 
+본 저장소는 UI를 담당하는 **프론트엔드 워크스페이스**와 데이터 가공 및 도메인 로직을 담당하는 **백엔드 아키텍처 레이어**가 엄격히 구분된 구조적 모듈화를 채택하고 있습니다.
 ```
 ├── .gitignore
 ├── LICENSE
 ├── README.md
-└── 백엔드/             # Core Business Logic & Data Architecture Layer (본인 담당)
-    ├── data.js       # 인메모리 핵심 데이터셋(In-memory Menu Dataset) 구조 설계
-    ├── list.js       # URL 파라미터 분석 및 고차함수 기반 필터링 엔진
-    ├── detail.js     # 데이터 매칭 및 로컬스토리지 입출력(I/O) 흐름 제어
-    ├── wishlist.js   # 결제 데이터 파싱 및 실시간 금액 aggregate 연산 로직
-    └── board.js      # 타임스탬프 기반 게시글 적층 및 데이터 영속성 제어
+│
+├── 프론트엔드/             # React Component & UI View Layer
+│   ├── package.json        # 종속성 관리 (React v18, Vite v5 환경 명세)
+│   ├── vite.config.js      # Vite 빌드 파이프라인 및 개발 서버 환경 설정
+│   ├── index.html          # SPA 어플리케이션 단일 Entry Point
+│   └── src/
+│       ├── main.jsx        # React DOM Root 마운트 스크립트
+│       ├── App.jsx         # 메인 어플리케이션 레이아웃 컴포넌트
+│       ├── index.css       # 전체 키오스크 테마 및 웜 베이지 디자인 스타일시트
+│       ├── components/     # 계층별 독립 재사용 UI 컴포넌트 모듈
+│       │   ├── HeroHeader.jsx
+│       │   ├── MenuSection.jsx
+│       │   ├── SelectedItemModal.jsx
+│       │   ├── SelectedItemPane.jsx
+│       │   ├── CartModal.jsx
+│       │   ├── CartPane.jsx
+│       │   ├── OrderSummary.jsx
+│       │   ├── CheckoutModal.jsx
+│       │   └── ToastMessage.jsx
+│       └── data/
+│           └── menuData.js # 프론트엔드 가상 바인딩용 스텁 데이터
+│
+└── 백엔드/                 # Core Business Logic & Data Engine Layer (본인 담당)
+├── data.js             # 시스템 전체 인메모리 핵심 데이터셋 아키텍처 설계
+├── list.js             # 메뉴 조건 매칭 및 고차함수 기반 필터링 파이프라인
+├── detail.js           # 데이터 매칭 및 브라우저 스토리지 입출력(I/O) 제어 엔진
+└── wishlist.js         # 데이터 파싱 및 실시간 총액 aggregate 연산 비즈니스 로직 
 ```
-💡 프론트엔드 통합 가이드:
-각 화면의 마크업(HTML) 및 디자인(CSS) 소스 코드가 포함될 프론트엔드 레이어의 디렉토리 구조 및 파일 명명 규칙은, 프론트엔드 담당자(팀원 1)의 개발 정체성과 구현 방식에 맞춰 유연하게 통합 및 구축될 예정이다.
-
----
-## ⚠️ 프론트엔드(팀원 1) 작업 시 Vercel 라우팅 주의사항
-Vercel 클라우드 호스팅 환경에서 다중 페이지(MPA) 간의 라우팅 인프라가 브라우저 무중단 상태로 올바르게 오케스트레이션되기 위해 아래 규칙을 준수하여 마크업을 진행한다.
-
-1. 최상위 루트(Root) 파일 위치 필수 준수
-
-* Vercel 배포 인프라는 프로젝트 최상위 경로(Root)에 위치한 index.html을 플랫폼의 Entry Point(메인 홈 화면)로 자동 리다이렉션팅한다.
-
-* 따라서 index.html, test.html, list.html, detail.html, wishlist.html, board.html 등의 모든 독립적 화면 파일들은 서브 폴더 내부가 아닌 최상위 루트 경로(.gitignore가 배치된 공간)에 평면 구조로 생성해야만 정적 라우팅 경로(예: /list.html) 분기가 정상 도달한다.
-
-2. 상대 자원 참조 및 선행 검증 가이드
-
-* HTML 마크업 내부에서 이미지, 스타일시트, 백엔드 로직 스크립트 자원을 바인딩할 때는 환경 제약 없는 상대 경로(./) 형식을 고수한다.
-
-* 깃허브 원격 Push 전, 로컬 에디터 환경 내 Live Server 에뮬레이터를 가동하여 로컬 환경(http://127.0.0.1:5500)에서의 쿼리 파라미터 유실 여부와 스토리지 입출력 트랜잭션을 선행 검증하는 것을 권장한다.
-
-
 ---
 ## 👥 R&R (Role & Responsibilities)
-본 프로젝트는 구조적인 협업을 위해 UI 디자인과 비즈니스 로직 레이어를 엄격히 분리(Decoupling)하여 개발을 진행한다.
 
-**1. Front-end UI/UX Architecture (팀원 1 담당):**
+**1. Front-end UI/UX Architecture (팀원 1 담당)**
+* React 프레임워크 기반의 컴포넌트 설계 및 키오스크 컨셉의 레이아웃 마크업
+* 웜 베이지 및 오렌지 포인트를 활용한 현대적인 감성의 키오스크 테마 디자인 스타일링
+* 한 화면 내에서 팝업 모달, 패널, 토스트 메시지가 유기적으로 구동되는 SPA 인터랙션 및 상태 화면 연동
 
-* 키오스크 컨셉의 레이아웃 마크업 및 최적의 컬러웨이/테마 확립
-
-* Media Query를 활용한 모바일 퍼스트 반응형 뷰포트 최적화
-
-* 페이지 전환 및 컴포넌트 인터랙션용 CSS 구조 설계 및 연동
-
-**2. Logic & Data Architecture (팀원 2 / 본인 담당):**
-
-* 전체 인메모리 핵심 데이터셋 포맷 설계 및 규격 정의 (data.js)
-
-* URLSearchParams 기반 다중 조건 쿼리 스트링 데이터 파싱 파이프라인 구축 (list.js, detail.js)
-
-* 비동기 프로미스(fetch) 기반 외부 기후 데이터 트래킹 및 옵션 매칭 데이터 처리 알고리즘 구현 (detail.js)
-
-* 브라우저 스토리지 입출력을 활용한 장바구니 상태 관리 및 애그리게이션 알고리즘 설계 (wishlist.js)
-
-* 상태 변화에 따른 데이터 정합성 검증 및 예외 처리 로직 구현
+**2. Logic & Data Architecture (팀원 2 / 본인 담당)**
+* 어플리케이션 표준 인메모리 메뉴 데이터셋 규격 정의 및 데이터 포맷 아키텍처 설계 (`data.js`)
+* 도메인 데이터의 정합성 검증 및 고차함수 기반 조건부 데이터 필터링 파이프라인 구축 (`list.js`)
+* 선택 옵션에 따른 객체 데이터 캡슐화 및 브라우저 스토리지 입출력(I/O) 트랜잭션 흐름 제어 엔진 구현 (`detail.js`)
+* 장바구니 내 수량 가감 제어 데이터 검증 및 `reduce()` 연산 기반의 실시간 결제 데이터 애그리게이션 알고리즘 설계 (`wishlist.js`)
 
 ---
-## 💡 Engineering Log
-**UI와 비즈니스 로직의 완전한 결합 분리(Decoupling)**
-데이터 레이어(백엔드/)와 뷰 레이어(HTML/CSS)의 의존성을 최소화하여 설계했다. 프론트엔드 작업자는 데이터의 구조나 저장 방식에 구애받지 않고 마크업과 UI 디자인에 전념할 수 있으며, 로직 담당자는 HTML 태그의 구조 변경과 무관하게 독립적으로 데이터 흐름을 최적화하고 디버깅할 수 있는 환경을 구축했다. 이는 추후 실제 REST API 및 외부 DB 인프라로 전환하더라도 자바스크립트 코드의 대대적인 수정 없이 인터페이스 함수만 변경하면 되는 유연한 확장성을 제공한다.
- 
+## 💡 Engineering Log: UI와 비즈니스 로직의 완전한 결합 분리 (Decoupling)
 
+본 프로젝트는 데이터 연산 레이어(`백엔드/`)와 뷰 렌더링 레이어(`프론트엔드/`)의 의존성을 최소화하는 **디커플링(Decoupling) 설계**를 원칙으로 진행되었습니다. 
+
+데이터의 내부 구조, 필터링 기법, 적층 및 연산 연산 메커니즘은 순수 자바스크립트 엔진으로 독립되어 작동하므로, 프론트엔드 작업자는 마크업 구조나 컴포넌트 계층의 변동에 구애받지 않고 유연하게 UI 디자인과 사용자 경험(UX) 고도화에 전념할 수 있습니다. 로직 담당자 또한 독립적인 테스트와 디버깅을 수행할 수 있어 협업 생산성을 극대화했습니다. 
+
+이러한 구조적 분리는 향후 클라이언트 사이드 임시 로직을 실제 상용 REST API 인프라 및 대규모 외부 데이터베이스 시스템으로 마이그레이션하더라도, 프론트엔드 컴포넌트 코드의 대대적인 전면 수정 없이 인터페이스 결합 함수만 교체하면 되는 강력한 **확장성과 유지보수성**을 제공합니다.
